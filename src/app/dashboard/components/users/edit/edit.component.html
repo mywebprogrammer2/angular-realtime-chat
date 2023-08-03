@@ -1,0 +1,72 @@
+<div class="container-fluid pt-3">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Users - Edit</h1>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+
+  <form (submit)="update()" #EditForm="ngForm">
+    <div class="card">
+      <div class="card-header">
+        <h2>Register User</h2>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+          <!-- Name -->
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field  class="w-100" appearance="outline">
+              <mat-label for="" >Name</mat-label>
+              <input matInput type="text" name="name" ngModel [ngModel]="user?.name" required>
+            </mat-form-field>
+            <mat-error *ngIf="errors && errors?.name">{{errors?.name}}</mat-error>
+          </div>
+          <!-- Email -->
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field  class="w-100" appearance="outline">
+              <mat-label for="">Email</mat-label>
+              <input matInput type="email" name="email" ngModel [ngModel]="user?.email" required>
+            </mat-form-field>
+            <mat-error *ngIf="errors && errors?.email">{{errors?.email}}</mat-error>
+
+          </div>
+
+          <!-- Password -->
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label for="">Password</mat-label>
+              <input matInput [type]="showPassword ? 'text' : 'password'" name="password" ngModel >
+              <mat-icon matSuffix (click)="showPassword = !showPassword" [matTooltip]="showPassword ? 'Hide Password' : 'Show Password'">
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+            </mat-form-field>
+            <mat-error *ngIf="errors && errors?.password">{{errors?.password}}</mat-error>
+
+          </div>
+          <!-- Role -->
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label for="">Select Role</mat-label>
+              <mat-select required  name="role" ngModel [ngModel]="user?.roles?.at(0)?.id">
+                <mat-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="errors && errors?.role">{{errors?.role}}</mat-error>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="col-md-12">
+          <button mat-button color="primary" class=""  [routerLink]="['/dashboard','users']"  type="button"> Back to list</button>
+          <button mat-flat-button color="primary" class="float-end" [disabled]="requesting || !EditForm.valid" type="submit"> Save</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

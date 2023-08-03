@@ -1,0 +1,28 @@
+<div class="main">
+
+  <app-dashboard-sidebar></app-dashboard-sidebar>
+
+  <!-- layout-wrapper -->
+  <div class="layout-wrapper">
+
+    <app-dashboard-header ></app-dashboard-header>
+
+    <!-- content -->
+    <div class="content">
+      <div class="card">
+        <div class="card-body">
+          <router-outlet ></router-outlet>
+        </div>
+      </div>
+    </div>
+    <!-- ./ content -->
+
+    <!-- content-footer -->
+    <app-dashboard-footer></app-dashboard-footer>
+    <!-- ./ content-footer -->
+
+  </div>
+  <!-- ./ layout-wrapper -->
+
+
+</div>

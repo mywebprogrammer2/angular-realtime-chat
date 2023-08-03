@@ -1,0 +1,89 @@
+<!-- {{-- -------------------- Saved Messages -------------------- --}} -->
+<table *ngIf="get == 'saved'" class="messenger-list-item" [attr.data-contact]="authUser?.id">
+    <tr data-action="0">
+        <!-- {{-- Avatar side --}} -->
+        <td>
+        <div class="saved-messages avatar av-m">
+            <span class="far fa-bookmark"></span>
+        </div>
+        </td>
+        <!-- {{-- center side --}} -->
+        <td>
+            <p data-id="{{ authUser?.id }}" data-type="user">Saved Messages <span>You</span></p>
+            <span>Save messages secretly</span>
+        </td>
+    </tr>
+</table>
+
+<!-- {{-- -------------------- Contact list -------------------- --}} -->
+
+<!-- <?php
+$lastMessageBody = mb_convert_encoding($lastMessage->body, 'UTF-8', 'UTF-8');
+$lastMessageBody = strlen($lastMessageBody) > 30 ? mb_substr($lastMessageBody, 0, 30, 'UTF-8').'..' : $lastMessageBody;
+?> -->
+<table *ngIf="get == 'users' && !!lastMessage" class="messenger-list-item" [attr.data-contact]="user?.id">
+    <tr data-action="0">
+        <!-- {{-- Avatar side --}} -->
+        <td style="position: relative">
+          <span *ngIf="user?.active_status" class="activeStatus"></span>
+
+        <div class="avatar av-m"
+        style="background-image: url('{{ user?.avatar }}');">
+        </div>
+        </td>
+        <!-- {{-- center side --}} -->
+        <td>
+        <p data-id="{{ user?.id }}" data-type="user">
+            {{ user?.name.length > 12 ? (user?.name | slice:0:12) + '..' : user?.name }}
+            <span class="contact-item-time" [attr.data-time]="lastMessage?.created_at">{{ lastMessage?.timeAgo }}</span></p>
+
+          <!-- {{-- Last Message user indicator --}} -->
+          <ng-container *ngIf="lastMessage?.from_id == authUser?.id" >
+            <span>
+              <span class="lastMessageIndicator">You :</span>
+            </span>
+          </ng-container>
+          <!-- {{-- Last message body --}} -->
+          <ng-container *ngIf="!lastMessage?.attachment == null" >
+            <span>
+              <span class="fas fa-file"></span> Attachment
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="lastMessage?.attachment == null" >
+            <span [innerHTML]="lastMessageBody">
+
+            </span>
+          </ng-container>
+
+        <!-- {{-- New messages counter --}} -->
+        <ng-container *ngIf="unseenCounter > 0">
+          <b>{{unseenCounter}}</b>
+        </ng-container>
+        </td>
+    </tr>
+</table>
+
+
+<!-- {{-- -------------------- Search Item -------------------- --}} -->
+
+<table *ngIf="get == 'search_item'"  class="messenger-list-item" attr.data-contact="{{ user?.id }}">
+    <tr data-action="0">
+        <!-- {{-- Avatar side --}} -->
+        <td>
+        <div class="avatar av-m"
+        style="background-image: url('{{ user?.avatar }}');">
+        </div>
+        </td>
+        <!-- {{-- center side --}} -->
+        <td>
+            <p data-id="{{ user?.id }}" data-type="user">
+            {{  user?.name?.length != undefined && user?.name?.length > 12 ? (user?.name | slice:0:12) + '..' : user?.name ?? '' }}
+        </td>
+
+    </tr>
+</table>
+
+<!-- {{-- -------------------- Shared photos Item -------------------- --}} -->
+
+<div *ngIf="get == 'sharedPhoto'" class="shared-photo chat-image" style="background-image: url('{{ image }}')"></div>

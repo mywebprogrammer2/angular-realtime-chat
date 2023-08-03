@@ -1,0 +1,45 @@
+<div class="container-fluid pt-3">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Role - List</h1>
+    </div>
+    <div class="col-md-6">
+      <div class="float-end">
+        <button *ngIf="can('role-create')" mat-stroked-button color="primary" [routerLink]="['/dashboard','roles','create']"  >
+          <mat-icon>add</mat-icon>
+          Add Role
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Created</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let role of roles;let i = index;">
+          <td>{{role.id}}</td>
+          <td>{{role.name}}</td>
+          <td>{{role.created_at | date: 'mediumDate'}}</td>
+          <td>
+            <button *ngIf="can('role-edit')" class="" [style.width]="'35px'" [style.height]="'30px'" [style.padding]="'6px'" [routerLink]="['/dashboard','roles', 'edit',role.id]" title="Edit" mat-icon-button>
+              <mat-icon class="h6">edit</mat-icon>
+            </button>
+            <button *ngIf="can('role-delete')" class="" [style.width]="'35px'" [color]="'warn'" [style.height]="'30px'" [style.padding]="'6px'" (click)="openDeleteConfirmationDialog(role.id)" title="Delete" mat-icon-button>
+              <mat-icon class="h6">delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>

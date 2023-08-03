@@ -1,0 +1,47 @@
+
+
+<div class="message-card" [ngClass]="{'mc-sender': message.isSender}" data-id="{{  message.id  }}">
+    <!-- {{-- Delete Message Button --}} -->
+    <div *ngIf="message.isSender" (click)="openDeleteConfirmationDialog()" class="actions">
+        <i class="fas fa-trash delete-btn"  data-id="{{ message.id }}"></i>
+    </div>
+    <!-- {{-- Card --}} -->
+    <div class="message-card-content">
+            <div *ngIf="message.attachment.type != 'image' || message.message" class="message">
+              <span [innerHTML]="(message.message == null && message.attachment != null && message.attachment.type != 'file') ? message.attachment.title : message.message"></span>
+
+                <span  attr.data-time='{{message.created_at}}' class='message-time'>
+                  <ng-container *ngIf="message.isSender">
+                    <ng-container *ngIf="message.seen" >
+                      <span   class="fas fa-check-double {{message.seen}} seen" ></span>
+                    </ng-container>
+                    <span *ngIf="!message.seen" >
+                      <span   class="fas fa-check {{message.seen}} seen" ></span>
+                    </span>
+                  </ng-container>
+                  <span class='time'>{{message.timeAgo}}</span>
+                </span>
+                <!-- {{-- If attachment is a file --}} -->
+                <a *ngIf="message.attachment.type == 'file'" [href]="message.attachment.url" target="_blank" class="file-download">
+                    <span class="fas fa-file"></span> {{message.attachment.title}}</a>
+            </div>
+        <div *ngIf="message.attachment.type  == 'image' " class="image-wrapper" [style.textAlign]="message.isSender ? 'end' : 'start'">
+            <div class="image-file chat-image" (click)="openImage.emit(message.attachment.url)"  style="background-image: url('{{ message.attachment.url }}')" >
+                <div>{{ message.attachment.title }}</div>
+            </div>
+            <div style="margin-bottom:5px">
+              <span  attr.data-time='{{message.created_at}}' class='message-time'>
+                <ng-container *ngIf="message.isSender">
+                  <ng-container *ngIf="message.seen" >
+                    <span   class="fas fa-check-double {{message.seen}} seen" ></span>
+                  </ng-container>
+                  <span *ngIf="!message.seen" >
+                    <span   class="fas fa-check {{message.seen}} seen" ></span>
+                  </span>
+                </ng-container>
+                <span class='time'>{{message.timeAgo}}</span>
+              </span>
+            </div>
+        </div>
+    </div>
+</div>

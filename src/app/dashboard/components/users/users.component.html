@@ -1,0 +1,49 @@
+<div class="container-fluid pt-3">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Users - List</h1>
+    </div>
+    <div class="col-md-6">
+      <div class="float-end">
+        <button *ngIf="can('user-create')" mat-stroked-button color="primary" [routerLink]="['/dashboard','users','create']"  >
+          <mat-icon>add</mat-icon>
+          Add User
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>email</th>
+          <th>status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.status ? 'Active' : 'De-Active' }}</td>
+          <td>
+            <button *ngIf="can('user-edit')" class="" [style.width]="'35px'" [style.height]="'30px'" [color]="user.status ? 'warn' :'primary'"  [style.padding]="'6px'" (click)="user.status ? deactivate(user) : activate(user)" title="{{ !user.status ? 'Activate' : 'Deactivate' }}" mat-icon-button>
+              <mat-icon class="h6">power_settings_new</mat-icon>
+            </button>
+            <button *ngIf="can('user-edit')" class="" [style.width]="'35px'" [style.height]="'30px'" [style.padding]="'6px'" [routerLink]="['/dashboard','users', 'edit',user.id]" title="Edit" mat-icon-button>
+              <mat-icon class="h6">edit</mat-icon>
+            </button>
+            <button *ngIf="can('user-delete')" class="" [style.width]="'35px'" [color]="'warn'" [style.height]="'30px'" [style.padding]="'6px'" (click)="openDeleteConfirmationDialog(user.id)" title="Delete" mat-icon-button>
+              <mat-icon class="h6">delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

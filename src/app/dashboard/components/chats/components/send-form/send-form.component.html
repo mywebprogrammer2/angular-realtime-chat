@@ -1,0 +1,34 @@
+<div class="messenger-sendCard">
+  <form id="message-form" method="POST" (submit)="sendMessage()" #form="ngForm" enctype="multipart/form-data">
+    <label>
+      <span class="fas fa-plus-circle"></span>
+      <input [disabled]='!user?.id' type="file" class="upload-attachment" name="file" accept=".{{ allowedImages.join(', .') }}, .{{ allowedFiles.join(', .') }}" #fileInput  (change)="onAttachmentChange($event)"  />
+    </label>
+    <textarea [readonly]='!user?.id' name="message" class="m-send app-scroll" (keyup)="emitTyping()" ngModel placeholder="Type a message.."></textarea>
+    <button [disabled]='!user?.id || requesting' class="send-button">
+      <span class="fas fa-paper-plane"></span>
+    </button>
+  </form>
+  <span class="text-danger" *ngIf="errorMessage && errorMessage!=''"> {{errorMessage}} </span>
+  <div *ngIf="attachmentPreview" class="attachment-preview">
+    <ng-container *ngIf="isImageAttachment()">
+      <div  (click)="cancelAttachment()">
+        <span class="fas fa-times cancel"></span>
+      </div>
+      <div class="image-file chat-image" style="background-image: url('{{attachmentPreview}}');"></div>
+      <p>
+        <span class="fas fa-file-image"></span>
+         {{ attachmentFileName }}
+      </p>
+
+    </ng-container>
+    <ng-container  *ngIf="!isImageAttachment()">
+      <p (click)="cancelAttachment()">
+        <span class="fas fa-times cancel position-absolute" ></span>
+      </p>
+      <p style="padding:0px 30px;"><span class="fas fa-file"></span>
+        {{ attachmentFileName }}
+      </p>
+    </ng-container>
+  </div>
+</div>

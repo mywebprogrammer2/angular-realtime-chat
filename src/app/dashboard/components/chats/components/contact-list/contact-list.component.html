@@ -1,0 +1,43 @@
+<table *ngFor="let user of contacts" class="messenger-list-item" (click)="getChats(user)" [attr.data-contact]="user?.id">
+  <tr data-action="0">
+      <!-- {{-- Avatar side --}} -->
+      <td style="position: relative">
+        <span *ngIf="user?.active_status" class="activeStatus"></span>
+
+      <div class="avatar av-m"
+      style="background-image: url('{{ user?.avatar }}');">
+      </div>
+      </td>
+      <!-- {{-- center side --}} -->
+      <td>
+      <p data-id="{{ user?.id }}" data-type="user">
+          {{ (user?.name?.length ?? 0) > 12 ? (user?.name | slice:0:12) + '..' : user?.name }}
+
+          <span class="contact-item-time" [attr.data-time]="user?.last_message?.created_at">{{ user?.last_message?.timeAgo }}</span></p>
+
+        <!-- {{-- Last Message user indicator --}} -->
+        <ng-container *ngIf="user?.last_message?.from_id == authUser?.id" >
+          <span>
+            <span class="lastMessageIndicator">You: </span>
+          </span>
+        </ng-container>
+        <!-- {{-- Last message body --}} -->
+        <ng-container *ngIf="!(user?.last_message?.attachment?.file == null)" >
+          <span>
+            <span class="fas fa-file"></span> Attachment
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="user?.last_message?.attachment?.file == null" >
+          <span [innerHTML]="user?.last_message?.message">
+
+          </span>
+        </ng-container>
+
+      <!-- {{-- New messages counter --}} -->
+      <ng-container *ngIf=" user?.unseen != 0">
+        <b>{{ user?.unseen }}</b>
+      </ng-container>
+      </td>
+  </tr>
+</table>
